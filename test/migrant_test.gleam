@@ -1,8 +1,8 @@
-import gleeunit
-import gleeunit/should
 import gleam/erlang
 import gleam/io
 import gleam/result
+import gleeunit
+import gleeunit/should
 import migrant
 import simplifile
 import sqlight
@@ -52,7 +52,7 @@ fn setup() -> Nil {
   let _ = simplifile.create_directory(priv_dir())
 
   // Create the db file if it doesn't exist
-  let is_file = case simplifile.verify_is_file(db_path()) {
+  let is_file = case simplifile.is_file(db_path()) {
     Ok(is_file) -> is_file
     Error(e) -> {
       io.debug(e)

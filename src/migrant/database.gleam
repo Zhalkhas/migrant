@@ -1,11 +1,11 @@
-import gleam/io
-import gleam/dynamic
 import gleam/dict
-import gleam/list
-import gleam/string
+import gleam/dynamic
 import gleam/int
-import gleam/result
+import gleam/io
+import gleam/list
 import gleam/option.{None, Some}
+import gleam/result
+import gleam/string
 import migrant/types.{
   type Error, type Migration, type Migrations, DatabaseError, MigrationError,
   RollbackError,
@@ -74,10 +74,10 @@ pub fn filter_applied_migrations(
           _ -> {
             io.println(
               "-> Found "
-                <> int.to_string(dict.size(m))
-                <> " "
-                <> pluralise_migration(count)
-                <> " to apply",
+              <> int.to_string(dict.size(m))
+              <> " "
+              <> pluralise_migration(count)
+              <> " to apply",
             )
             next(m)
           }
@@ -142,7 +142,7 @@ fn apply(migration_tuple: #(String, Migration), db: sqlight.Connection) {
       io.println("-> Applying migration: " <> name)
       case exec(db, sql) {
         Ok(_) -> {
-          case mark_migration_as_applied(db, migration_tuple) {
+          let _ = case mark_migration_as_applied(db, migration_tuple) {
             Ok(_) -> Ok(Nil)
             Error(e) -> {
               io.println("-> Failed to mark migration as applied: " <> name)
